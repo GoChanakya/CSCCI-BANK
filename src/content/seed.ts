@@ -313,17 +313,23 @@ export const seed: SiteContent = {
     {
       id: "dir-ho",
       role: { en: "Head Office", mr: "मुख्य कार्यालय" },
-      rows: [{ name: null, email: null, phone: null }],
+      name: null,
+      email: null,
+      phone: null,
     },
     {
       id: "dir-ceo",
       role: { en: "Chief Executive Officer", mr: "मुख्य कार्यकारी अधिकारी" },
-      rows: [{ name: null, email: null, phone: null }],
+      name: null,
+      email: null,
+      phone: null,
     },
     {
       id: "dir-mgr",
       role: { en: "Manager", mr: "व्यवस्थापक" },
-      rows: [{ name: null, email: null, phone: null }],
+      name: null,
+      email: null,
+      phone: null,
     },
   ],
 

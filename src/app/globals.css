@@ -82,3 +82,9 @@ body {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* Bilingual: both languages ship in the HTML, one is hidden per selection. */
+html[data-lang="en"] [data-l="mr"],
+html[data-lang="mr"] [data-l="en"] {
+  display: none !important;
+}

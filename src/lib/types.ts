@@ -94,10 +94,13 @@ export type Lead = {
   status: "new" | "contacted" | "closed";
 };
 
-export type Directory = {
+/** One row of the departments/contact directory, grouped by role on the page. */
+export type DirectoryContact = {
   id: string;
   role: L;
-  rows: { name: Pending<string>; email: Pending<string>; phone: Pending<string> }[];
+  name: Pending<string>;
+  email: Pending<string>;
+  phone: Pending<string>;
 };
 
 /** Free-text blocks the manager edits (mission, vision, chairman's message…). */
@@ -139,6 +142,6 @@ export type SiteContent = {
   achievements: Achievement[];
   gallery: GalleryItem[];
   documents: DocumentItem[];
-  directory: Directory[];
+  directory: DirectoryContact[];
   blocks: TextBlock[];
 };

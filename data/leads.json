@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Harsh",
+    "phone": "8329038705",
+    "schemeInterest": "Recurring Deposit Scheme",
+    "id": "6392791e-c0d3-4cb1-ab0e-a568a8b42633",
+    "createdAt": "2026-09-05T07:17:18.877Z",
+    "status": "new"
+  },
+  {
+    "name": "Test Teacher",
+    "phone": "9876543210",
+    "schemeInterest": "Savings Deposit Scheme",
+    "note": "smoke test",
+    "id": "65f221a6-a658-4de0-b2ce-dfa344158730",
+    "createdAt": "2026-09-05T06:34:35.514Z",
+    "status": "new"
+  }
+]
