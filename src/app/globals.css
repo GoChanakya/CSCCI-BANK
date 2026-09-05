@@ -32,8 +32,8 @@
   --color-ink-700: #33302d;
   --color-ink-900: #1c1a18;
 
-  --font-display: var(--font-display), Georgia, serif;
-  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-display: var(--font-noto), Arial, sans-serif;
+  --font-sans: var(--font-noto), Arial, sans-serif;
 }
 
 :root {
@@ -78,9 +78,25 @@ body {
   line-height: 1.75;
 }
 
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.motion-rise {
+  animation: fade-up 500ms ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .motion-rise { animation: none; }
 }
 
 /* Bilingual: both languages ship in the HTML, one is hidden per selection. */

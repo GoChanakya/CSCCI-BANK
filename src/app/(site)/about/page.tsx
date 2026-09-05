@@ -4,6 +4,7 @@ import { getContent } from "@/lib/store";
 import { t } from "@/content/strings";
 import { Txt } from "@/components/Txt";
 import { PageHero, Prose, Section } from "@/components/ui";
+import { ValueIcon } from "@/components/ValueIcon";
 
 export const revalidate = 300;
 
@@ -14,10 +15,10 @@ export const metadata: Metadata = {
 };
 
 const values = [
-  { title: t.transparency, body: t.transparencyBody, glyph: "🪔" },
-  { title: t.trust, body: t.trustBody, glyph: "🤝" },
-  { title: t.credibility, body: t.credibilityBody, glyph: "🛡️" },
-  { title: t.oneness, body: t.onenessBody, glyph: "🧵" },
+  { title: t.transparency, body: t.transparencyBody, icon: "transparency" as const },
+  { title: t.trust, body: t.trustBody, icon: "trust" as const },
+  { title: t.credibility, body: t.credibilityBody, icon: "credibility" as const },
+  { title: t.oneness, body: t.onenessBody, icon: "oneness" as const },
 ];
 
 const links = [
@@ -42,10 +43,10 @@ export default async function AboutPage() {
           {values.map((v) => (
             <article
               key={v.title.en}
-              className="flex h-full flex-col rounded-xl border-t-4 border-saffron-500 bg-sand-50 p-5 shadow-sm"
+              className="group flex h-full flex-col rounded-xl border border-sand-200 border-t-2 border-t-saffron-400 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-md"
             >
-              <span aria-hidden className="text-2xl">
-                {v.glyph}
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-sand-100 text-maroon-700 transition duration-300 group-hover:bg-saffron-100">
+                <ValueIcon name={v.icon} />
               </span>
               <h3 className="mt-2 font-display text-lg font-semibold text-maroon-700">
                 <Txt v={v.title} />

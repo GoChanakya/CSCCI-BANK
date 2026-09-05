@@ -21,7 +21,9 @@ const feesNote = {
 
 export default async function ServicesPage() {
   const { services, fees } = await getContent();
-  const items = services.filter((s) => s.active).sort((a, b) => a.order - b.order);
+  const items = services
+    .filter((s) => s.active && s.imageUrl)
+    .sort((a, b) => a.order - b.order);
 
   return (
     <>

@@ -14,7 +14,11 @@ export const metadata: Metadata = {
 
 export default async function GalleryPage() {
   const { gallery } = await getContent();
-  const items = [...gallery].sort((a, b) => a.order - b.order);
+  // A row saved before its photo finished uploading has no url — skip it
+  // rather than render a broken image.
+  const items = gallery
+    .filter((item) => item.url)
+    .sort((a, b) => a.order - b.order);
 
   return (
     <>

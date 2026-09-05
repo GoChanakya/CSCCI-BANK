@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { NextResponse } from "next/server";
 import { isSignedIn } from "@/lib/auth";
+import { adminApp, bucketName } from "@/lib/firebase";
 
 /**
  * Image / PDF upload for the CMS.
@@ -34,26 +35,32 @@ export async function POST(req: Request) {
   const name = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}${ext}`;
   const bytes = Buffer.from(await file.arrayBuffer());
 
-  const bucketName = process.env.FIREBASE_STORAGE_BUCKET;
   if (bucketName) {
-    const { getApps, initializeApp, cert } = await import("firebase-admin/app");
-    const { getStorage } = await import("firebase-admin/storage");
-    if (!getApps().length) {
-      initializeApp({
-        credential: cert({
-          projectId: process.env.FIREBASE_PROJECT_ID,
-          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-          privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-        }),
-        storageBucket: bucketName,
+    try {
+      const { getStorage } = await import("firebase-admin/storage");
+      // Bucket named explicitly: the shared app may have been initialised by
+      // the content store before this route ran.
+      const blob = getStorage(await adminApp())
+        .bucket(bucketName)
+        .file(`uploads/${name}`);
+      // No per-object ACL: the bucket uses uniform access and grants allUsers
+      // objectViewer once, at bucket level. Everything in it is public media by
+      // design (banner photos, board portraits, annual report PDFs).
+      await blob.save(bytes, {
+        contentType: file.type,
+        metadata: { cacheControl: "public, max-age=31536000, immutable" },
       });
+      return NextResponse.json({
+        url: `https://storage.googleapis.com/${bucketName}/uploads/${name}`,
+      });
+    } catch (err) {
+      // Without this the CMS just showed a blank failure.
+      console.error("[upload] bucket write failed", err);
+      return NextResponse.json(
+        { error: `upload failed: ${(err as Error).message}` },
+        { status: 500 },
+      );
     }
-    const blob = getStorage().bucket().file(`uploads/${name}`);
-    await blob.save(bytes, { contentType: file.type });
-    await blob.makePublic();
-    return NextResponse.json({
-      url: `https://storage.googleapis.com/${bucketName}/uploads/${name}`,
-    });
   }
 
   const dir = path.join(process.cwd(), "public", "uploads");

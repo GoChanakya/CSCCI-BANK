@@ -2,6 +2,7 @@ import "server-only";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { seed } from "@/content/seed";
+import { adminApp, firebaseConfigured } from "@/lib/firebase";
 import type { Lead, SiteContent } from "@/lib/types";
 
 /**
@@ -22,11 +23,7 @@ const DATA_DIR = path.join(process.cwd(), "data");
 const CONTENT_FILE = path.join(DATA_DIR, "content.json");
 const LEADS_FILE = path.join(DATA_DIR, "leads.json");
 
-export const usingFirestore = Boolean(
-  process.env.FIREBASE_PROJECT_ID &&
-    process.env.FIREBASE_CLIENT_EMAIL &&
-    process.env.FIREBASE_PRIVATE_KEY,
-);
+export const usingFirestore = firebaseConfigured;
 
 /* ------------------------------------------------------------------ fs ---- */
 
@@ -50,19 +47,8 @@ let dbPromise: Promise<Firestore> | null = null;
 
 function db(): Promise<Firestore> {
   dbPromise ??= (async () => {
-    const { getApps, initializeApp, cert } = await import("firebase-admin/app");
     const { getFirestore } = await import("firebase-admin/firestore");
-    if (!getApps().length) {
-      initializeApp({
-        credential: cert({
-          projectId: process.env.FIREBASE_PROJECT_ID,
-          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-          // Vercel env vars keep newlines escaped.
-          privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-        }),
-      });
-    }
-    return getFirestore();
+    return getFirestore(await adminApp());
   })();
   return dbPromise;
 }

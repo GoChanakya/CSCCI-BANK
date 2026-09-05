@@ -28,18 +28,6 @@ export const schemeFields: Field[] = [
     clientSupplied: true,
     hint: 'e.g. "6.50% p.a." — while blank, the website says the rate is available at the office.',
   },
-  {
-    key: "icon",
-    label: "Icon",
-    type: "select",
-    options: [
-      { value: "piggy", label: "Savings" },
-      { value: "calendar", label: "Recurring" },
-      { value: "coins", label: "Monthly income" },
-      { value: "bolt", label: "Quick loan" },
-      { value: "home", label: "Home loan" },
-    ],
-  },
   { key: "active", label: "Show on website", type: "boolean" },
 ];
 

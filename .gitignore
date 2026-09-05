@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# CMS content and uploads written at runtime (fs backend only)
+/data
+/public/uploads
+
+# Service account keys - never commit
+*serviceAccount*.json
+gcp-key.json

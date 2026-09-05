@@ -1,33 +1,35 @@
 import type { Metadata } from "next";
-import { Mukta, Tiro_Devanagari_Marathi } from "next/font/google";
+import { Noto_Sans_Devanagari } from "next/font/google";
 import "../globals.css";
 import { getContent } from "@/lib/store";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ChatWidget } from "@/components/ChatWidget";
 import { EnquiryProvider } from "@/components/Enquiry";
+import { siteUrl } from "@/lib/site-url";
 
-const display = Tiro_Devanagari_Marathi({
-  weight: "400",
+const noto = Noto_Sans_Devanagari({
+  weight: ["400", "500", "700"],
   subsets: ["latin", "devanagari"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const body = Mukta({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin", "devanagari"],
-  variable: "--font-body",
+  variable: "--font-noto",
   display: "swap",
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Chhatrapati Shivaji Co-operative Credit Institution, Kolhapur",
     template: "%s · Chhatrapati Shivaji Co-operative Credit Institution",
   },
   description:
     "A registered teachers' credit co-operative society in Kolhapur offering deposit schemes, member loans and assisted services. Not a bank; not RBI-regulated.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    alternateLocale: "mr_IN",
+    siteName: "Chhatrapati Shivaji Co-operative Credit Institution",
+  },
 };
 
 /** Restores the member's language choice before first paint. */
@@ -47,7 +49,7 @@ export default async function RootLayout({
     <html
       lang="en"
       data-lang="en"
-      className={`${display.variable} ${body.variable} h-full`}
+      className={`${noto.variable} h-full`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: langScript }} />

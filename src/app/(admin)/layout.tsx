@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Mukta } from "next/font/google";
+import { Noto_Sans_Devanagari } from "next/font/google";
 import "../globals.css";
 
-const body = Mukta({
-  weight: ["400", "500", "600", "700"],
+const noto = Noto_Sans_Devanagari({
+  weight: ["400", "500", "700"],
   subsets: ["latin", "devanagari"],
-  variable: "--font-body",
+  variable: "--font-noto",
   display: "swap",
 });
 
@@ -21,7 +21,7 @@ export default function AdminRootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-lang="en" className={`${body.variable} h-full`}>
+    <html lang="en" data-lang="en" className={`${noto.variable} h-full`}>
       <body className="min-h-full bg-sand-100 antialiased">{children}</body>
     </html>
   );

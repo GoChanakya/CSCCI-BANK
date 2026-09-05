@@ -42,7 +42,7 @@ export function Carousel({ banners }: { banners: Banner[] }) {
             priority={i === 0}
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-maroon-900/85 via-maroon-900/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-maroon-900/70 via-maroon-900/30 to-transparent" />
           <div className="container-page relative flex h-full flex-col justify-center">
             <h2 className="max-w-xl font-display text-2xl font-bold text-sand-50 drop-shadow sm:text-4xl">
               <Txt v={b.heading} />

@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Uploads go through /api/admin/upload (Admin SDK, manager session required).
+// Uploaded objects are made public individually, so no client access is needed.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

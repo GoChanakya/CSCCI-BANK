@@ -30,7 +30,7 @@ export function Section({
   tone?: "sand" | "white";
 }) {
   return (
-    <section className={tone === "white" ? "bg-white" : ""}>
+    <section className={tone === "white" ? "motion-rise bg-white" : "motion-rise"}>
       <div className="container-page py-10 sm:py-14">
         {title && (
           <h2 className="mb-6 font-display text-xl font-bold text-maroon-700 sm:text-2xl">

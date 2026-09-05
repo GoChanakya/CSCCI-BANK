@@ -8,14 +8,15 @@ import { SchemeCard } from "@/components/SchemeCard";
 import { DisclosureFull, DisclosureShort } from "@/components/Disclosure";
 import { Prose, Section } from "@/components/ui";
 import { EnquiryButton } from "@/components/Enquiry";
+import { ValueIcon } from "@/components/ValueIcon";
 
 export const revalidate = 300;
 
 const values = [
-  { title: t.transparency, body: t.transparencyBody, glyph: "🪔" },
-  { title: t.trust, body: t.trustBody, glyph: "🤝" },
-  { title: t.credibility, body: t.credibilityBody, glyph: "🛡️" },
-  { title: t.oneness, body: t.onenessBody, glyph: "🧵" },
+  { title: t.transparency, body: t.transparencyBody, icon: "transparency" as const },
+  { title: t.trust, body: t.trustBody, icon: "trust" as const },
+  { title: t.credibility, body: t.credibilityBody, icon: "credibility" as const },
+  { title: t.oneness, body: t.onenessBody, icon: "oneness" as const },
 ];
 
 export default async function HomePage() {
@@ -26,7 +27,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Carousel banners={banners} />
+      <Carousel banners={banners.filter((b) => b.imageUrl)} />
 
       <div className="border-b border-sand-200 bg-white">
         <div className="container-page py-2">
@@ -77,10 +78,10 @@ export default async function HomePage() {
           {values.map((v) => (
             <article
               key={v.title.en}
-              className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-sand-200"
+              className="group rounded-xl border border-sand-200 border-t-2 border-t-saffron-400 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-md"
             >
-              <div className="grid h-11 w-11 place-items-center rounded-full bg-saffron-100 text-xl">
-                <span aria-hidden>{v.glyph}</span>
+              <div className="grid h-10 w-10 place-items-center rounded-full bg-sand-100 text-maroon-700 transition duration-300 group-hover:bg-saffron-100">
+                <ValueIcon name={v.icon} />
               </div>
               <h3 className="mt-3 font-display text-lg font-semibold text-maroon-700">
                 <Txt v={v.title} />
@@ -118,7 +119,7 @@ export default async function HomePage() {
             .map((s) => (
               <article
                 key={s.id}
-                className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-sand-200"
+                className="group overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-sand-200 transition duration-300 hover:-translate-y-0.5 hover:shadow-md"
               >
                 <Image
                   src={s.imageUrl}
